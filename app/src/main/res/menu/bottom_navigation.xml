@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_cpu"
+        android:icon="@drawable/ic_baseline_memory_24"
+        android:title="CPU" />
+
+    <item
+        android:id="@+id/nav_sound"
+        android:icon="@drawable/ic_baseline_volume_up_24"
+        android:title="Sound Volume" />
+
+
+</menu>

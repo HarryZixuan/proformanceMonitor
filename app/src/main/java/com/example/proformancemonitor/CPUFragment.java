@@ -62,10 +62,6 @@ public class CPUFragment extends Fragment {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
     protected class updateCpuInfo extends AsyncTask <String, Void, String> {
 
         @Override

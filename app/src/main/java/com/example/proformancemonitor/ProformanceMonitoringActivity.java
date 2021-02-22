@@ -33,7 +33,7 @@ public class ProformanceMonitoringActivity extends AppCompatActivity {
         Fragment defaultFragment = new CPUFragment();
         defaultFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new CPUFragment()).commit();
+                defaultFragment).commit();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -55,7 +55,6 @@ public class ProformanceMonitoringActivity extends AppCompatActivity {
 
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     selectedFragment).commit();
-
             return true;
         }
     };

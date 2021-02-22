@@ -59,6 +59,7 @@ public class CPUFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         tv_cpuUsage = getView().findViewById(R.id.tv_cpuUsage);
+        System.out.println("created");
 
         final Handler handler = new Handler();
         timer = new Timer();
@@ -67,16 +68,23 @@ public class CPUFragment extends Fragment {
             public void run() {
                 handler.post(new Runnable() {
                     public void run() {
-                        updateCpuInfo mAsync = new updateCpuInfo();
-                        mAsync.execute(ipAddress);
+                        UpdateCpuInfo updateCpuInfo = new UpdateCpuInfo();
+                        updateCpuInfo.execute(ipAddress);
                     }
                 });
             }
         };
-        timer.schedule(task, 0, 1000); //Every 1 second
+        timer.schedule(task, 0, 2000); //Every 2 second
+
     }
 
-    protected class updateCpuInfo extends AsyncTask <String, Void, String> {
+    @Override
+    public void onStop() {
+        super.onStop();
+        timer.cancel();
+    }
+
+    protected class UpdateCpuInfo extends AsyncTask <String, Void, String> {
 
         @Override
         protected String doInBackground(String... param) {

@@ -10,6 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="landscape"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         android:theme="@style/Theme.ProformanceMonitor">
         <activity android:name=".ProformanceMonitoringActivity"
                   android:screenOrientation="landscape" ></activity>

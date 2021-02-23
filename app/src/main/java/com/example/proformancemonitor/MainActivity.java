@@ -23,62 +23,62 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText et_ip;
     private Button btn_go;
-    String ipAddress;
+    private String ipAddress;
+    private String connectionState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
 
         et_ip = findViewById(R.id.et_ip);
         btn_go = findViewById(R.id.btn_go);
+
+        //used to handle netwoek connection failed case
+        //will keep the current ipAdress
+        Intent intent = getIntent();
+        if(intent != null) {
+            ipAddress = intent.getStringExtra("ipAddress");
+            et_ip.setText(ipAddress);
+        }
+
         btn_go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ipAddress = et_ip.getText().toString().trim();
-
-                new checkNetworkConnection().execute(ipAddress);
+                checkNetworkConnection();
             }
         });
-
-
     }
 
-    private class checkNetworkConnection extends AsyncTask<String, Void, String> {
+    public void checkNetworkConnection(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //use cpuInfo to check network connection
+                //network connection failed exception will be handled in NetworkConnection
+                NetworkConnection networkConnection
+                        = new NetworkConnection(ipAddress, "{\"text\": \"cpuInfo\"}", getApplicationContext());
+                connectionState = networkConnection.connect();
 
-        @Override
-        protected String doInBackground(String... param) {
-            URL url = null;
-
-            try {
-                url = new URL(param[0]);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.setConnectTimeout(1000);
-                int code = urlConnection.getResponseCode();
-
-                if(code == 200){
-                    Intent intent_good = new Intent(getApplicationContext(), ProformanceMonitoringActivity.class);
-                    intent_good.putExtra("ipAddress", ipAddress);
-                    startActivity(intent_good);
-                }
-
-                else {
-                    Intent intent_error = new Intent(getApplicationContext(), ConnectionFailedActivity.class);
-                    intent_error.putExtra("ipAddress", ipAddress);
-                    startActivity(intent_error);
-
-                }
-
-            }catch (Exception e){
-                e.printStackTrace();
-                Intent intent_error = new Intent(getApplicationContext(), ConnectionFailedActivity.class);
-                intent_error.putExtra("ipAddress", ipAddress);
-                startActivity(intent_error);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(connectionState != null){
+                            Intent intent_good = new Intent(getApplicationContext(), ProformanceMonitoringActivity.class);
+                            intent_good.putExtra("ipAddress", ipAddress);
+                            startActivity(intent_good);
+                        }
+                        else {
+                            Intent intent_error = new Intent(getApplicationContext(), ConnectionFailedActivity.class);
+                            intent_error.putExtra("ipAddress", ipAddress);
+                            startActivity(intent_error);
+                        }
+                    }
+                });
             }
-            return null;
-        }
+        }).start();;
+
     }
+
 }

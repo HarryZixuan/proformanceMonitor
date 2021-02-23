@@ -29,10 +29,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class CPUFragment extends Fragment {
-    Bundle bundle;
-    String ipAddress;
-    TextView tv_cpuUsage;
-    int test = 0;
+    private Bundle bundle;
+    private String ipAddress;
+    private String cpuUsage = "";
+    private TextView tv_cpuUsage;
     private Timer timer;
     private TimerTask task;
     private BufferedInputStream bufferedInputStream;
@@ -59,7 +59,6 @@ public class CPUFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         tv_cpuUsage = getView().findViewById(R.id.tv_cpuUsage);
-        System.out.println("created");
 
         final Handler handler = new Handler();
         timer = new Timer();
@@ -68,14 +67,39 @@ public class CPUFragment extends Fragment {
             public void run() {
                 handler.post(new Runnable() {
                     public void run() {
-                        UpdateCpuInfo updateCpuInfo = new UpdateCpuInfo();
-                        updateCpuInfo.execute(ipAddress);
+                        //UpdateCpuInfo updateCpuInfo = new UpdateCpuInfo();
+                        //updateCpuInfo.execute(ipAddress);
+                        //NetworkConnection networkConnection = new NetworkConnection(ipAddress, "{\"text\": \"cpuInfo\"}");
+                        //String responseStr = networkConnection.connect();
+                        //System.out.println("tv: " + responseStr);
+                        //tv_cpuUsage.setText(responseStr);
+                        updateCPUInfo();
                     }
                 });
             }
+
         };
         timer.schedule(task, 0, 2000); //Every 2 second
 
+    }
+
+    public void updateCPUInfo(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                NetworkConnection networkConnection
+                        = new NetworkConnection(ipAddress, "{\"text\": \"cpuInfo\"}", getActivity());
+                cpuUsage = networkConnection.connect();
+
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tv_cpuUsage.setText(cpuUsage);
+                    }
+                });
+            }
+        }).start();;
     }
 
     @Override

@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
 public class ConnectionFailedActivity extends Activity {
     private TextView tv_errorMessage;
+    private Button btn_ok;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,5 +26,18 @@ public class ConnectionFailedActivity extends Activity {
 
         tv_errorMessage = findViewById(R.id.tv_errorMessage);
         tv_errorMessage.setText("cannot connect to: " + ipAddress);
+
+        btn_ok = findViewById(R.id.btn_errorOK);
+
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //return to main activity
+                Intent intent_main = new Intent(getApplicationContext(), MainActivity.class);
+                intent_main.putExtra("ipAddress", ipAddress);
+                startActivity(intent_main);
+
+            }
+        });
     }
 }

@@ -1,6 +1,5 @@
 package com.example.proformancemonitor;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,17 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class SoundFragment extends Fragment {
     Bundle bundle;
     String ipAddress;
+    String currentSoundVolume;
     TextView tv_soundVolume;
     SeekBar sb_soundVolume;
 
@@ -46,8 +39,66 @@ public class SoundFragment extends Fragment {
 
         tv_soundVolume = getView().findViewById(R.id.tv_soundVolume);
         sb_soundVolume = getView().findViewById(R.id.sb_soundVolume);
+        getCurrentSoundVolume();
+
+        sb_soundVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                setSoundVoulme(i);
+                tv_soundVolume.setText(""+i+"");
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
 
+    public void getCurrentSoundVolume(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                NetworkConnection networkConnection
+                        = new NetworkConnection(ipAddress, "{\"text\": \"getSoundVolume\"}", getActivity());
+                currentSoundVolume = networkConnection.connect();
+
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tv_soundVolume.setText(currentSoundVolume);
+                        sb_soundVolume.setProgress(Integer.parseInt(currentSoundVolume));
+                    }
+                });
+            }
+        }).start();;
+    }
+
+    public void setSoundVoulme (int soundVolume){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                NetworkConnection networkConnection
+                        = new NetworkConnection(ipAddress, "{\"text\": \"setSoundVolume\", \"value\": \"" + soundVolume + "\" }" , getActivity());
+                currentSoundVolume = networkConnection.connect();
+
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tv_soundVolume.setText(currentSoundVolume);
+                        sb_soundVolume.setProgress(Integer.parseInt(currentSoundVolume));
+                    }
+                });
+            }
+        }).start();;
+    }
 
 }

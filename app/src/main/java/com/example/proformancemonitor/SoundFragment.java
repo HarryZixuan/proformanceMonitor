@@ -1,5 +1,6 @@
 package com.example.proformancemonitor;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ public class SoundFragment extends Fragment {
     Bundle bundle;
     String ipAddress;
     String currentSoundVolume;
+    String setSoundVolumelRes;
     TextView tv_soundVolume;
     SeekBar sb_soundVolume;
 
@@ -44,18 +46,18 @@ public class SoundFragment extends Fragment {
         sb_soundVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                setSoundVoulme(i);
-                tv_soundVolume.setText(""+i+"");
+                tv_soundVolume.setText("" + i + "");
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                int progress = seekBar.getProgress();
+                setSoundVoulme(progress);
+                tv_soundVolume.setText(String.valueOf(progress));
             }
         });
     }
@@ -87,14 +89,21 @@ public class SoundFragment extends Fragment {
             public void run() {
                 NetworkConnection networkConnection
                         = new NetworkConnection(ipAddress, "{\"text\": \"setSoundVolume\", \"value\": \"" + soundVolume + "\" }" , getActivity());
-                currentSoundVolume = networkConnection.connect();
+                setSoundVolumelRes = networkConnection.connect();
 
 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        tv_soundVolume.setText(currentSoundVolume);
-                        sb_soundVolume.setProgress(Integer.parseInt(currentSoundVolume));
+                        if(setSoundVolumelRes.equals("success")) {
+                            //tv_soundVolume.setText(String.valueOf(soundVolume));
+                        }
+                        else {
+                            Intent intent_error = new Intent(getActivity(), ConnectionFailedActivity.class);
+                            intent_error.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent_error.putExtra("ipAddress", ipAddress);
+                            getActivity().startActivity(intent_error);
+                        }
                     }
                 });
             }

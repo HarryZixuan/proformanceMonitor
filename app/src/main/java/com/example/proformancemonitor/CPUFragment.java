@@ -1,11 +1,7 @@
 package com.example.proformancemonitor;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -67,12 +56,6 @@ public class CPUFragment extends Fragment {
             public void run() {
                 handler.post(new Runnable() {
                     public void run() {
-                        //UpdateCpuInfo updateCpuInfo = new UpdateCpuInfo();
-                        //updateCpuInfo.execute(ipAddress);
-                        //NetworkConnection networkConnection = new NetworkConnection(ipAddress, "{\"text\": \"cpuInfo\"}");
-                        //String responseStr = networkConnection.connect();
-                        //System.out.println("tv: " + responseStr);
-                        //tv_cpuUsage.setText(responseStr);
                         updateCPUInfo();
                     }
                 });

@@ -1,5 +1,6 @@
 package com.example.proformancemonitor;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -54,16 +55,21 @@ public class CPUFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         tv_cpuUsage = getView().findViewById(R.id.tv_cpuUsage);
 
         gv_cpuUsage = getView().findViewById(R.id.gv_cpuUsage);
         gv_cpuUsage.setPivotX(17);
         lineGraphSeries = new LineGraphSeries<DataPoint>();
+        lineGraphSeries.setColor(Color.rgb(235,204,195));
+        lineGraphSeries.setThickness(8);
         gv_cpuUsage.addSeries(lineGraphSeries);
 
-
-
         //set graph view format
+        gv_cpuUsage.getGridLabelRenderer().setHorizontalLabelsColor(Color.WHITE);
+        gv_cpuUsage.getGridLabelRenderer().setHorizontalAxisTitleTextSize(5);
+        gv_cpuUsage.getGridLabelRenderer().setVerticalLabelsColor(Color.WHITE);
+        gv_cpuUsage.getGridLabelRenderer().setVerticalAxisTitleTextSize(5);
         Viewport viewport = gv_cpuUsage.getViewport();
         viewport.setYAxisBoundsManual(true);
         viewport.setMinY(0);
@@ -73,6 +79,7 @@ public class CPUFragment extends Fragment {
         viewport.setMinX(0);
         viewport.setMaxX(35);
         viewport.setScalable(true);
+
 
         //set up timer, grant cpu usage every second
         final Handler handler = new Handler();

@@ -12,8 +12,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.Viewport;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,9 +28,12 @@ public class CPUFragment extends Fragment {
     private TextView tv_cpuUsage;
     private Timer timer;
     private TimerTask task;
-    private BufferedInputStream bufferedInputStream;
-    private BufferedReader bufferedReader;
-    private StringBuffer stringBuffer;
+
+    private GraphView gv_cpuUsage;
+    private LineGraphSeries<DataPoint> lineGraphSeries;
+    private int timeCounter =0;
+
+
 
     @Nullable
     @Override
@@ -49,6 +56,25 @@ public class CPUFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         tv_cpuUsage = getView().findViewById(R.id.tv_cpuUsage);
 
+        gv_cpuUsage = getView().findViewById(R.id.gv_cpuUsage);
+        gv_cpuUsage.setPivotX(17);
+        lineGraphSeries = new LineGraphSeries<DataPoint>();
+        gv_cpuUsage.addSeries(lineGraphSeries);
+
+
+
+        //set graph view format
+        Viewport viewport = gv_cpuUsage.getViewport();
+        viewport.setYAxisBoundsManual(true);
+        viewport.setMinY(0);
+        viewport.setMaxY(100);
+        viewport.setScrollable(true);
+
+        viewport.setMinX(0);
+        viewport.setMaxX(35);
+        viewport.setScalable(true);
+
+        //set up timer, grant cpu usage every second
         final Handler handler = new Handler();
         timer = new Timer();
         task = new TimerTask() {
@@ -62,8 +88,14 @@ public class CPUFragment extends Fragment {
             }
 
         };
-        timer.schedule(task, 0, 2000); //Every 2 second
+        timer.schedule(task, 0, 1000); //Every 1 second
 
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        timer.cancel();
     }
 
     public void updateCPUInfo(){
@@ -79,16 +111,26 @@ public class CPUFragment extends Fragment {
                     @Override
                     public void run() {
                         tv_cpuUsage.setText(cpuUsage);
+                        addGraphViewEntry(Double.parseDouble(cpuUsage));
                     }
                 });
             }
         }).start();;
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        timer.cancel();
+    public void addGraphViewEntry(double cpuUsage){
+        //set scrollToEnd to false if timecounter < 35,
+        //otherwise, the graph display negative x scale at beginning
+        if(timeCounter < 35) {
+            lineGraphSeries.appendData(new DataPoint(timeCounter, cpuUsage), false, 60);
+        }
+        else {
+            lineGraphSeries.appendData(new DataPoint(timeCounter, cpuUsage), true, 60);
+        }
+        timeCounter ++;
+
     }
+
+
 
 }

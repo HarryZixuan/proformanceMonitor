@@ -12,11 +12,175 @@
         android:textSize="50sp"
         android:text="CPU" />
 
+    <TextView
+        android:id="@+id/tv_cpuTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CPU"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        android:paddingTop="20dp"
+        android:paddingLeft="10dp"
+        android:visibility="visible"/>
+
     <com.jjoe64.graphview.GraphView
         android:id="@+id/gv_cpuUsage"
+        android:layout_below="@+id/tv_cpuTitle"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="20dp"
+        android:minWidth="380dp"
+        android:minHeight="380dp"
+        android:layout_width="380dp"
+        android:layout_height="380dp" />
+
+    <TableLayout
+        android:id="@+id/tl_cpuInfo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/gv_cpuUsage">
+
+        <TableRow android:layout_width="250dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Manufacturer"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_cpuManu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="manufacturer"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Brand"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_cpuBrand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Brand"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold" />
+        </TableRow>
+
+
+        <TableRow android:layout_width="250dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Speed"
+                android:gravity="left"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tv_cpuSpeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="speed"
+                android:gravity="left"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Socket"
+                android:gravity="left"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tv_cpuSocket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Socket"
+                android:gravity="left"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold"/>
+        </TableRow>
+
+        <TableRow android:layout_width="250dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="#Physical Cores"
+                android:gravity="left"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tv_cpuNrofPhyCores"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Physical Cores"
+                android:gravity="left"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="#Cores"
+                android:gravity="left"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tv_cpuNrofCores"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="cores"
+                android:gravity="left"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold"/>
+        </TableRow>
+
+    </TableLayout>
 
 </RelativeLayout>

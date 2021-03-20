@@ -10,6 +10,4 @@
         android:id="@+id/nav_sound"
         android:icon="@drawable/ic_baseline_volume_up_24"
         android:title="Sound Volume" />
-
-
 </menu>

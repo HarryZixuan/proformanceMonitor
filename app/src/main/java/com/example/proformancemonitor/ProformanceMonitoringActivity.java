@@ -27,8 +27,7 @@ public class ProformanceMonitoringActivity extends AppCompatActivity {
         setContentView(R.layout.activity_proformance_monitoring);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
-        //bottomNav.setBackgroundColor(Color.rgb(36,37,59));
-        //bottomNav.setItemTextColor(ColorStateList.valueOf(Color.WHITE));
+
 
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 

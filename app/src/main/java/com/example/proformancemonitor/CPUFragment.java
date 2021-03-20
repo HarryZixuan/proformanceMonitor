@@ -14,11 +14,14 @@ import androidx.fragment.app.Fragment;
 
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.Viewport;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -30,9 +33,20 @@ public class CPUFragment extends Fragment {
     private Timer timer;
     private TimerTask task;
 
+    ArrayList<String> cpuUsageList;
     private GraphView gv_cpuUsage;
-    private LineGraphSeries<DataPoint> lineGraphSeries;
+    private LineGraphSeries<DataPoint> cpuUsageSeries;
+    private LineGraphSeries<DataPoint> cpuTempertureSeries;
     private int timeCounter =0;
+
+    ArrayList<String> cpuInfoList;
+    private TextView tv_cpuManu;
+    private TextView tv_cpuBrand;
+    private TextView tv_cpuSpeed;
+    private TextView tv_cpuSocket;
+    private TextView tv_cpuNrofPhyCores;
+    private TextView tv_cpuNrofCores;
+
 
 
 
@@ -55,21 +69,41 @@ public class CPUFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //handle cpu info
+        tv_cpuManu = getView().findViewById(R.id.tv_cpuManu);
+        tv_cpuBrand = getView().findViewById(R.id.tv_cpuBrand);
+        tv_cpuSpeed = getView().findViewById(R.id.tv_cpuSpeed);
+        tv_cpuSocket = getView().findViewById(R.id.tv_cpuSocket);
+        tv_cpuNrofPhyCores = getView().findViewById(R.id.tv_cpuNrofPhyCores);
+        tv_cpuNrofCores = getView().findViewById(R.id.tv_cpuNrofCores);
+        updateCPUInfo();
 
+        //handle cpu usage
         tv_cpuUsage = getView().findViewById(R.id.tv_cpuUsage);
-
         gv_cpuUsage = getView().findViewById(R.id.gv_cpuUsage);
         gv_cpuUsage.setPivotX(17);
-        lineGraphSeries = new LineGraphSeries<DataPoint>();
-        lineGraphSeries.setColor(Color.rgb(235,204,195));
-        lineGraphSeries.setThickness(8);
-        gv_cpuUsage.addSeries(lineGraphSeries);
+        cpuUsageSeries = new LineGraphSeries<DataPoint>();
+        cpuUsageSeries.setColor(Color.rgb(235,204,195));
+        cpuUsageSeries.setThickness(8);
+        cpuUsageSeries.setTitle("CPU Usage");
+        cpuTempertureSeries = new LineGraphSeries<DataPoint>();
+        cpuTempertureSeries.setColor(Color.rgb(117,216,190));
+        cpuTempertureSeries.setThickness(8);
+        cpuTempertureSeries.setTitle("CPU Temperature");
+
+        gv_cpuUsage.addSeries(cpuUsageSeries);
+        gv_cpuUsage.addSeries(cpuTempertureSeries);
 
         //set graph view format
         gv_cpuUsage.getGridLabelRenderer().setHorizontalLabelsColor(Color.WHITE);
         gv_cpuUsage.getGridLabelRenderer().setHorizontalAxisTitleTextSize(5);
         gv_cpuUsage.getGridLabelRenderer().setVerticalLabelsColor(Color.WHITE);
         gv_cpuUsage.getGridLabelRenderer().setVerticalAxisTitleTextSize(5);
+        gv_cpuUsage.getLegendRenderer().setVisible(true);
+        gv_cpuUsage.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+        gv_cpuUsage.getLegendRenderer().setTextSize(40);
+        gv_cpuUsage.getLegendRenderer().setBackgroundColor(Color.argb(150, 36, 37, 59));
+        gv_cpuUsage.getLegendRenderer().setTextColor(Color.WHITE);
         Viewport viewport = gv_cpuUsage.getViewport();
         viewport.setYAxisBoundsManual(true);
         viewport.setMinY(0);
@@ -89,14 +123,13 @@ public class CPUFragment extends Fragment {
             public void run() {
                 handler.post(new Runnable() {
                     public void run() {
-                        updateCPUInfo();
+                        updateCPUUsage();
                     }
                 });
             }
 
         };
         timer.schedule(task, 0, 1000); //Every 1 second
-
     }
 
     @Override
@@ -111,28 +144,64 @@ public class CPUFragment extends Fragment {
             public void run() {
                 NetworkConnection networkConnection
                         = new NetworkConnection(ipAddress, "{\"text\": \"cpuInfo\"}", getActivity());
-                cpuUsage = networkConnection.connect();
+                cpuInfoList = networkConnection.connect(6);
 
 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        tv_cpuUsage.setText(cpuUsage);
-                        addGraphViewEntry(Double.parseDouble(cpuUsage));
+                        tv_cpuManu.setText(cpuInfoList.get(0));
+                        tv_cpuBrand.setText(cpuInfoList.get(1));
+                        tv_cpuSpeed.setText(cpuInfoList.get(2));
+                        tv_cpuSocket.setText(cpuInfoList.get(3));
+                        tv_cpuNrofPhyCores.setText(cpuInfoList.get(4));
+                        tv_cpuNrofCores.setText(cpuInfoList.get(5));
                     }
                 });
             }
         }).start();;
     }
 
-    public void addGraphViewEntry(double cpuUsage){
+    public void updateCPUUsage(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                NetworkConnection networkConnection
+                        = new NetworkConnection(ipAddress, "{\"text\": \"cpuUsage\"}", getActivity());
+                cpuUsageList = networkConnection.connect(2);
+
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tv_cpuUsage.setText(cpuUsage);
+
+                        //some system, ex, MacOS cannot get cpu temperature
+                        //add try catch to handle the exception
+                        double cpuTemper;
+                        try {
+                            cpuTemper = Double.parseDouble(cpuUsageList.get(1));
+                        }catch (Exception e){
+                            cpuTemper = 1;
+                        }
+
+                        addGraphViewEntry(Double.parseDouble(cpuUsageList.get(0)), cpuTemper);
+                    }
+                });
+            }
+        }).start();;
+    }
+
+    public void addGraphViewEntry(double cpuUsage, double cpuTemper){
         //set scrollToEnd to false if timecounter < 35,
         //otherwise, the graph display negative x scale at beginning
         if(timeCounter < 35) {
-            lineGraphSeries.appendData(new DataPoint(timeCounter, cpuUsage), false, 60);
+            cpuUsageSeries.appendData(new DataPoint(timeCounter, cpuUsage), false, 60);
+            cpuTempertureSeries.appendData(new DataPoint(timeCounter, cpuTemper), false, 60);
         }
         else {
-            lineGraphSeries.appendData(new DataPoint(timeCounter, cpuUsage), true, 60);
+            cpuUsageSeries.appendData(new DataPoint(timeCounter, cpuUsage), true, 60);
+            cpuTempertureSeries.appendData(new DataPoint(timeCounter, cpuTemper), true, 60);
         }
         timeCounter ++;
 

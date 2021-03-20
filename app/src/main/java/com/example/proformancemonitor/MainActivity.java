@@ -18,6 +18,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText et_ip;
     private Button btn_go;
     private String ipAddress;
-    private String connectionState;
+    private ArrayList<String> connectionState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         et_ip = findViewById(R.id.et_ip);
         btn_go = findViewById(R.id.btn_go);
+
 
         //used to handle netwoek connection failed case
         //will keep the current ipAdress
@@ -58,11 +60,11 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                //use cpuInfo to check network connection
+                //use cpuUsage to check network connection
                 //network connection failed exception will be handled in NetworkConnection
                 NetworkConnection networkConnection
-                        = new NetworkConnection(ipAddress, "{\"text\": \"cpuInfo\"}", getApplicationContext());
-                connectionState = networkConnection.connect();
+                        = new NetworkConnection(ipAddress, "{\"text\": \"cpuUsage\"}", getApplicationContext());
+                connectionState = networkConnection.connect(2);
 
                 runOnUiThread(new Runnable() {
                     @Override

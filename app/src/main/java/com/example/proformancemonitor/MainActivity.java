@@ -1,5 +1,6 @@
 package com.example.proformancemonitor;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
@@ -13,11 +14,15 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.BatchUpdateException;
 import java.util.ArrayList;
 
 
@@ -25,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText et_ip;
     private Button btn_go;
+    private Button btn_scanQR;
     private String ipAddress;
     private ArrayList<String> connectionState;
 
@@ -37,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         et_ip = findViewById(R.id.et_ip);
         btn_go = findViewById(R.id.btn_go);
+        btn_scanQR = findViewById(R.id.btn_scanQR);
 
 
         //used to handle netwoek connection failed case
@@ -54,6 +61,28 @@ public class MainActivity extends AppCompatActivity {
                 checkNetworkConnection();
             }
         });
+
+        btn_scanQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentIntegrator intentIntegrator = new IntentIntegrator(MainActivity.this);
+                intentIntegrator.setPrompt("for flash use volume up key");
+                intentIntegrator.setBeepEnabled(true);
+                intentIntegrator.setOrientationLocked(true);
+                intentIntegrator.setCaptureActivity(QRCapture.class);
+                intentIntegrator.initiateScan();
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+
+        if(intentResult.getContents() != null){
+            et_ip.setText(intentResult.getContents());
+        }
     }
 
     public void checkNetworkConnection(){

@@ -7,7 +7,12 @@
         android:title="CPU" />
 
     <item
+        android:id="@+id/nav_memory"
+        android:icon="@drawable/ic_memory"
+        android:title="Memory" />
+
+    <item
         android:id="@+id/nav_sound"
-        android:icon="@drawable/ic_baseline_volume_up_24"
-        android:title="Sound Volume" />
+        android:icon="@drawable/ic_control"
+        android:title="Control" />
 </menu>

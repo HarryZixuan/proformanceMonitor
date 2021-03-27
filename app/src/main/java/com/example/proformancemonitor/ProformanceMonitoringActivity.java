@@ -55,6 +55,10 @@ public class ProformanceMonitoringActivity extends AppCompatActivity {
                     selectedFragment = new CPUFragment();
                     selectedFragment.setArguments(bundle);
                     break;
+                case R.id.nav_memory:
+                    selectedFragment = new MemoryFragment();
+                    selectedFragment.setArguments(bundle);
+                    break;
                 case R.id.nav_sound:
                     selectedFragment = new SoundFragment();
                     selectedFragment.setArguments(bundle);

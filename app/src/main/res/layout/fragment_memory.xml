@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/darkBlue">
+
+    <TextView
+        android:id="@+id/tv_memoryTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Memory"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        android:paddingTop="20dp"
+        android:paddingLeft="10dp"
+        android:visibility="visible"/>
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/gv_memoryUsage"
+        android:layout_below="@+id/tv_memoryTitle"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="20dp"
+        android:minWidth="380dp"
+        android:minHeight="380dp"
+        android:layout_width="380dp"
+        android:layout_height="380dp" />
+
+    <TableLayout
+        android:id="@+id/tl_memoryInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/gv_memoryUsage">
+
+        <TableRow android:layout_width="250dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Total"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_memoryTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="total"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Active"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_memoryActive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="active"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold" />
+        </TableRow>
+
+
+        <TableRow android:layout_width="250dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Free"
+                android:gravity="left"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tv_memoryFree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="free"
+                android:gravity="left"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Used"
+                android:gravity="left"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tv_memoryUsed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="used"
+                android:gravity="left"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold"/>
+        </TableRow>
+
+        <TableRow android:layout_width="250dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="SwapUsed"
+                android:gravity="left"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tv_memorySwapUsed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="swapused"
+                android:gravity="left"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="SwapFree"
+                android:gravity="left"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tv_memorySwapFree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="swapfree"
+                android:gravity="left"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold"/>
+        </TableRow>
+    </TableLayout>
+</RelativeLayout>

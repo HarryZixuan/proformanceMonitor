@@ -2,25 +2,41 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/darkBlue"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/tv_errorMessage"
+        android:id="@+id/tv_mainTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Oops!"
+        android:textSize="30dp"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:text="Connection failed! Please check your IP address"/>
+        android:paddingTop="20dp"
+        android:textColor="@color/white"
+        android:paddingLeft="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_errorMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_mainTitle"
+        android:text="Connection failed! Please check your network Connection"
+        android:textSize="20dp"
+        android:paddingTop="10dp"
+        android:textColor="@color/violet"
+        android:paddingLeft="20dp"/>
 
     <Button
         android:id="@+id/btn_errorOK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_below="@id/tv_errorMessage"
+        android:layout_below="@id/tv_errorMsg"
+        android:layout_centerInParent="true"
+        android:backgroundTint="@color/lightGreen"
+        android:insetTop="20dp"
         android:text="OK" />
 
 </RelativeLayout>

@@ -12,14 +12,25 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.ebanx.swipebtn.OnStateChangeListener;
+import com.ebanx.swipebtn.SwipeButton;
+
+import java.util.ArrayList;
+
 
 public class SoundFragment extends Fragment {
     Bundle bundle;
     String ipAddress;
-    String currentSoundVolume;
+    ArrayList<String> currentSoundVolAndBrightness;
     String setSoundVolumelRes;
     TextView tv_soundVolume;
     SeekBar sb_soundVolume;
+
+    String setBrightnessRes;
+    TextView tv_brightness;
+    SeekBar sb_brightness;
+
+    SwipeButton btn_shutdown;
 
     @Nullable
     @Override
@@ -41,7 +52,12 @@ public class SoundFragment extends Fragment {
 
         tv_soundVolume = getView().findViewById(R.id.tv_soundVolume);
         sb_soundVolume = getView().findViewById(R.id.sb_soundVolume);
-        getCurrentSoundVolume();
+        tv_brightness = getView().findViewById(R.id.tv_brightness);
+        sb_brightness = getView().findViewById(R.id.sb_brightness);
+
+        btn_shutdown = getView().findViewById(R.id.btn_shutdown);
+
+        getCurrentSoundVolAndBrightness();
 
         sb_soundVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -60,23 +76,56 @@ public class SoundFragment extends Fragment {
                 tv_soundVolume.setText(String.valueOf(progress));
             }
         });
+
+        sb_brightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                int progress = seekBar.getProgress();
+                setBrightness(progress);
+                tv_brightness.setText(String.valueOf(progress));
+            }
+        });
+
+        btn_shutdown.setOnStateChangeListener(new OnStateChangeListener() {
+            @Override
+            public void onStateChange(boolean active) {
+                shutdownServer();
+                Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+                homeIntent.addCategory( Intent.CATEGORY_HOME );
+                homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(homeIntent);
+            }
+        });
     }
 
 
-    public void getCurrentSoundVolume(){
+    public void getCurrentSoundVolAndBrightness(){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 NetworkConnection networkConnection
-                        = new NetworkConnection(ipAddress, "{\"text\": \"getSoundVolume\"}", getActivity());
-                currentSoundVolume = networkConnection.connect();
+                        = new NetworkConnection(ipAddress, "{\"text\": \"getSoundVolAndBrightness\"}", getActivity());
+                currentSoundVolAndBrightness = networkConnection.connect(2);
 
 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        tv_soundVolume.setText(currentSoundVolume);
-                        sb_soundVolume.setProgress(Integer.parseInt(currentSoundVolume));
+                        tv_soundVolume.setText(currentSoundVolAndBrightness.get(0));
+                        sb_soundVolume.setProgress(Integer.parseInt(currentSoundVolAndBrightness.get(0)));
+                        int tempBrightness = (int)Double.parseDouble(currentSoundVolAndBrightness.get(1));
+                        tv_brightness.setText(String.valueOf(tempBrightness));
+                        sb_brightness.setProgress(tempBrightness);
                     }
                 });
             }
@@ -110,4 +159,41 @@ public class SoundFragment extends Fragment {
         }).start();;
     }
 
+    public void setBrightness (int brightness){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                NetworkConnection networkConnection
+                        = new NetworkConnection(ipAddress, "{\"text\": \"setBrightness\", \"value\": \"" + brightness + "\" }" , getActivity());
+                setBrightnessRes = networkConnection.connect();
+
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(setBrightnessRes.equals("success")) {
+                            //tv_soundVolume.setText(String.valueOf(soundVolume));
+                        }
+                        else {
+                            Intent intent_error = new Intent(getActivity(), ConnectionFailedActivity.class);
+                            intent_error.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent_error.putExtra("ipAddress", ipAddress);
+                            getActivity().startActivity(intent_error);
+                        }
+                    }
+                });
+            }
+        }).start();;
+    }
+
+    public void shutdownServer (){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                NetworkConnection networkConnection
+                        = new NetworkConnection(ipAddress, "{\"text\": \"shutdownServer\"}" , getActivity());
+                setBrightnessRes = networkConnection.connect();
+            }
+        }).start();;
+    }
 }

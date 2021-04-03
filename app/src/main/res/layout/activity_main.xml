@@ -4,32 +4,88 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/darkBlue"
+    android:foregroundTint="@color/white"
     tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/iv_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:baselineAlignBottom="true"
+        android:cropToPadding="true"
+        android:src="@drawable/main_background" />
+
+    <TextView
+        android:id="@+id/tv_mainTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome"
+        android:textSize="30dp"
+        android:layout_below="@id/iv_background"
+        android:paddingTop="20dp"
+        android:textColor="@color/white"
+        android:paddingLeft="20dp"/>
+
+    <TextView
+        android:id="@+id/tv_introduction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Computer Proformance Monitor App"
+        android:textSize="20dp"
+        android:layout_below="@id/tv_mainTitle"
+        android:paddingTop="10dp"
+        android:textColor="@color/violet"
+        android:paddingLeft="20dp"/>
+    <TextView
+        android:id="@+id/tv_manual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scan QR Code to Enter IP Address"
+        android:textSize="20dp"
+        android:layout_below="@id/tv_introduction"
+        android:paddingTop="10dp"
+        android:textColor="@color/violet"
+        android:paddingLeft="20dp"/>
 
     <Button
         android:id="@+id/btn_scanQR"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/tv_manual"
         android:layout_centerInParent="true"
-        android:text="scan QR Code"/>
+        android:backgroundTint="@color/violet"
+        android:insetTop="20dp"
+        android:text="Scan QR Code"
+        app:icon="@android:drawable/ic_menu_camera" />
 
     <EditText
         android:id="@+id/et_ip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_scanQR"
+        android:layout_centerInParent="true"
         android:hint="IP Address:"
         android:imeOptions="actionGo"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_below="@+id/btn_scanQR"/>
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/white" />
 
     <Button
         android:id="@+id/btn_go"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_below="@id/et_ip"
-        android:text="go" />
+        android:backgroundTint="@color/lightGreen"
+        android:insetRight="10dp"
+        android:insetBottom="40dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="20mm"
+        android:paddingRight="20mm"
+        android:text="go"
+        android:textSize="20dp"/>
+
 
 </RelativeLayout>

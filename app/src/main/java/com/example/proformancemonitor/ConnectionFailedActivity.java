@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ConnectionFailedActivity extends AppCompatActivity {
-    private TextView tv_errorMessage;
+    //private TextView tv_errorMessage;
     private Button btn_ok;
 
     @Override
@@ -29,8 +29,8 @@ public class ConnectionFailedActivity extends AppCompatActivity {
 
         String ipAddress = intent.getStringExtra("ipAddress");
 
-        tv_errorMessage = findViewById(R.id.tv_errorMessage);
-        tv_errorMessage.setText("cannot connect to: " + ipAddress);
+        //tv_errorMessage = findViewById(R.id.tv_errorMessage);
+        //tv_errorMessage.setText("cannot connect to: " + ipAddress);
 
         btn_ok = findViewById(R.id.btn_errorOK);
 

@@ -145,19 +145,19 @@ public class CPUFragment extends Fragment {
                         = new NetworkConnection(ipAddress, "{\"text\": \"cpuInfo\"}", getActivity());
                 cpuInfoList = networkConnection.connect(6);
 
-
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        tv_cpuManu.setText(cpuInfoList.get(0));
-                        tv_cpuBrand.setText(cpuInfoList.get(1));
-                        tv_cpuSpeed.setText(cpuInfoList.get(2));
-                        tv_cpuSocket.setText(cpuInfoList.get(3));
-                        tv_cpuNrofPhyCores.setText(cpuInfoList.get(4));
-                        tv_cpuNrofCores.setText(cpuInfoList.get(5));
-                    }
-                });
-            }
+                if(getActivity() != null){ //used to handel  java.lang.NullPointerException
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tv_cpuManu.setText(cpuInfoList.get(0));
+                            tv_cpuBrand.setText(cpuInfoList.get(1));
+                            tv_cpuSpeed.setText(cpuInfoList.get(2));
+                            tv_cpuSocket.setText(cpuInfoList.get(3));
+                            tv_cpuNrofPhyCores.setText(cpuInfoList.get(4));
+                            tv_cpuNrofCores.setText(cpuInfoList.get(5));
+                        }
+                    });
+            }}
         }).start();;
     }
 
@@ -170,25 +170,28 @@ public class CPUFragment extends Fragment {
                 cpuUsageList = networkConnection.connect(2);
 
 
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        tv_cpuUsage.setText(cpuUsage);
+                if (getActivity() != null) { //used to handel  java.lang.NullPointerException
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tv_cpuUsage.setText(cpuUsage);
 
-                        //some system, ex, MacOS cannot get cpu temperature
-                        //add try catch to handle the exception
-                        double cpuTemper;
-                        try {
-                            cpuTemper = Double.parseDouble(cpuUsageList.get(1));
-                        }catch (Exception e){
-                            cpuTemper = 1;
+                            //some system, ex, MacOS cannot get cpu temperature
+                            //add try catch to handle the exception
+                            double cpuTemper;
+                            try {
+                                cpuTemper = Double.parseDouble(cpuUsageList.get(1));
+                            } catch (Exception e) {
+                                cpuTemper = 1;
+                            }
+
+                            addGraphViewEntry(Double.parseDouble(cpuUsageList.get(0)), cpuTemper);
                         }
-
-                        addGraphViewEntry(Double.parseDouble(cpuUsageList.get(0)), cpuTemper);
-                    }
-                });
+                    });
+                }
             }
         }).start();;
+
     }
 
     public void addGraphViewEntry(double cpuUsage, double cpuTemper){

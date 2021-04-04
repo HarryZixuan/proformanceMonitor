@@ -137,29 +137,31 @@ public class MemoryFragment extends Fragment {
                 memoryUsageList = networkConnection.connect(6);
 
 
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //the server will return memory info by String
-                        //first, convert String to double, and calculate the memory usage
-                        ArrayList<Double> memoryUsageDoubleList = new ArrayList<Double>();
-                        for(String str : memoryUsageList){
-                            try {
-                                memoryUsageDoubleList.add(Double.parseDouble(str));
-                            }catch (Exception e){
-                                memoryUsageDoubleList.add(-1d);
+                if(getActivity() != null) { //used to handel  java.lang.NullPointerException
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //the server will return memory info by String
+                            //first, convert String to double, and calculate the memory usage
+                            ArrayList<Double> memoryUsageDoubleList = new ArrayList<Double>();
+                            for (String str : memoryUsageList) {
+                                try {
+                                    memoryUsageDoubleList.add(Double.parseDouble(str));
+                                } catch (Exception e) {
+                                    memoryUsageDoubleList.add(-1d);
+                                }
                             }
+                            //second update the GUI, use convertBitsToGbytes to convert double value to string
+                            addGraphViewEntry(memoryUsageDoubleList.get(3) / memoryUsageDoubleList.get(0));
+                            tv_memoryTotal.setText(convertBitsToGbytes(memoryUsageDoubleList.get(0)));
+                            tv_memoryActive.setText(convertBitsToGbytes(memoryUsageDoubleList.get(1)));
+                            tv_memoryFree.setText(convertBitsToGbytes(memoryUsageDoubleList.get(2)));
+                            tv_memoryUsed.setText(convertBitsToGbytes(memoryUsageDoubleList.get(3)));
+                            tv_memorySwapUsed.setText(convertBitsToGbytes(memoryUsageDoubleList.get(4)));
+                            tv_memorySwapFree.setText(convertBitsToGbytes(memoryUsageDoubleList.get(5)));
                         }
-                        //second update the GUI, use convertBitsToGbytes to convert double value to string
-                        addGraphViewEntry(memoryUsageDoubleList.get(3)/memoryUsageDoubleList.get(0));
-                        tv_memoryTotal.setText(convertBitsToGbytes(memoryUsageDoubleList.get(0)));
-                        tv_memoryActive.setText(convertBitsToGbytes(memoryUsageDoubleList.get(1)));
-                        tv_memoryFree.setText(convertBitsToGbytes(memoryUsageDoubleList.get(2)));
-                        tv_memoryUsed.setText(convertBitsToGbytes(memoryUsageDoubleList.get(3)));
-                        tv_memorySwapUsed.setText(convertBitsToGbytes(memoryUsageDoubleList.get(4)));
-                        tv_memorySwapFree.setText(convertBitsToGbytes(memoryUsageDoubleList.get(5)));
-                    }
-                });
+                    });
+                }
             }
         }).start();;
     }

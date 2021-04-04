@@ -117,17 +117,18 @@ public class SoundFragment extends Fragment {
                         = new NetworkConnection(ipAddress, "{\"text\": \"getSoundVolAndBrightness\"}", getActivity());
                 currentSoundVolAndBrightness = networkConnection.connect(2);
 
-
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        tv_soundVolume.setText(currentSoundVolAndBrightness.get(0));
-                        sb_soundVolume.setProgress(Integer.parseInt(currentSoundVolAndBrightness.get(0)));
-                        int tempBrightness = (int)Double.parseDouble(currentSoundVolAndBrightness.get(1));
-                        tv_brightness.setText(String.valueOf(tempBrightness));
-                        sb_brightness.setProgress(tempBrightness);
-                    }
-                });
+                if (getActivity() != null) { //used to handel  java.lang.NullPointerException
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tv_soundVolume.setText(currentSoundVolAndBrightness.get(0));
+                            sb_soundVolume.setProgress(Integer.parseInt(currentSoundVolAndBrightness.get(0)));
+                            int tempBrightness = (int) Double.parseDouble(currentSoundVolAndBrightness.get(1));
+                            tv_brightness.setText(String.valueOf(tempBrightness));
+                            sb_brightness.setProgress(tempBrightness);
+                        }
+                    });
+                }
             }
         }).start();;
     }
@@ -140,21 +141,21 @@ public class SoundFragment extends Fragment {
                         = new NetworkConnection(ipAddress, "{\"text\": \"setSoundVolume\", \"value\": \"" + soundVolume + "\" }" , getActivity());
                 setSoundVolumelRes = networkConnection.connect();
 
-
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(setSoundVolumelRes.equals("success")) {
-                            //tv_soundVolume.setText(String.valueOf(soundVolume));
+                if(getActivity() != null) { //used to handel  java.lang.NullPointerException
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (setSoundVolumelRes.equals("success")) {
+                                //tv_soundVolume.setText(String.valueOf(soundVolume));
+                            } else {
+                                Intent intent_error = new Intent(getActivity(), ConnectionFailedActivity.class);
+                                intent_error.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent_error.putExtra("ipAddress", ipAddress);
+                                getActivity().startActivity(intent_error);
+                            }
                         }
-                        else {
-                            Intent intent_error = new Intent(getActivity(), ConnectionFailedActivity.class);
-                            intent_error.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent_error.putExtra("ipAddress", ipAddress);
-                            getActivity().startActivity(intent_error);
-                        }
-                    }
-                });
+                    });
+                }
             }
         }).start();;
     }
@@ -167,21 +168,21 @@ public class SoundFragment extends Fragment {
                         = new NetworkConnection(ipAddress, "{\"text\": \"setBrightness\", \"value\": \"" + brightness + "\" }" , getActivity());
                 setBrightnessRes = networkConnection.connect();
 
-
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(setBrightnessRes.equals("success")) {
-                            //tv_soundVolume.setText(String.valueOf(soundVolume));
+                if(getActivity() != null) { //used to handel  java.lang.NullPointerException
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (setBrightnessRes.equals("success")) {
+                                //tv_soundVolume.setText(String.valueOf(soundVolume));
+                            } else {
+                                Intent intent_error = new Intent(getActivity(), ConnectionFailedActivity.class);
+                                intent_error.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent_error.putExtra("ipAddress", ipAddress);
+                                getActivity().startActivity(intent_error);
+                            }
                         }
-                        else {
-                            Intent intent_error = new Intent(getActivity(), ConnectionFailedActivity.class);
-                            intent_error.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            intent_error.putExtra("ipAddress", ipAddress);
-                            getActivity().startActivity(intent_error);
-                        }
-                    }
-                });
+                    });
+                }
             }
         }).start();;
     }

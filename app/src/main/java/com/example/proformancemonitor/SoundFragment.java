@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class SoundFragment extends Fragment {
     Bundle bundle;
     String ipAddress;
-    ArrayList<String> currentSoundVolAndBrightness;
+    ArrayList<String> currentSoundVolAndDisplayInfo;
     String setSoundVolumelRes;
     TextView tv_soundVolume;
     SeekBar sb_soundVolume;
@@ -29,6 +29,13 @@ public class SoundFragment extends Fragment {
     String setBrightnessRes;
     TextView tv_brightness;
     SeekBar sb_brightness;
+
+    TextView tv_graphicCardModel;
+    TextView tv_graphicCardBus;
+    TextView tv_monitorResolution;
+    TextView tv_monitorModel;
+    TextView tv_monitorConnection;
+
 
     SwipeButton btn_shutdown;
 
@@ -54,10 +61,15 @@ public class SoundFragment extends Fragment {
         sb_soundVolume = getView().findViewById(R.id.sb_soundVolume);
         tv_brightness = getView().findViewById(R.id.tv_brightness);
         sb_brightness = getView().findViewById(R.id.sb_brightness);
+        tv_graphicCardModel = getView().findViewById(R.id.tv_graphicCardModel);
+        tv_graphicCardBus = getView().findViewById(R.id.tv_graphicCardBus);
+        tv_monitorResolution = getView().findViewById(R.id.tv_monitorResolution);
+        tv_monitorModel = getView().findViewById(R.id.tv_monitorModel);
+        tv_monitorConnection = getView().findViewById(R.id.tv_monitorConnection);
 
         btn_shutdown = getView().findViewById(R.id.btn_shutdown);
 
-        getCurrentSoundVolAndBrightness();
+        getCurrentSoundAndDisplayInfo();
 
         sb_soundVolume.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -109,23 +121,29 @@ public class SoundFragment extends Fragment {
     }
 
 
-    public void getCurrentSoundVolAndBrightness(){
+    public void getCurrentSoundAndDisplayInfo(){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 NetworkConnection networkConnection
-                        = new NetworkConnection(ipAddress, "{\"text\": \"getSoundVolAndBrightness\"}", getActivity());
-                currentSoundVolAndBrightness = networkConnection.connect(2);
+                        = new NetworkConnection(ipAddress, "{\"text\": \"getSoundAndDisplayInfo\"}", getActivity());
+                currentSoundVolAndDisplayInfo  = networkConnection.connect(7);
 
                 if (getActivity() != null) { //used to handel  java.lang.NullPointerException
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            tv_soundVolume.setText(currentSoundVolAndBrightness.get(0));
-                            sb_soundVolume.setProgress(Integer.parseInt(currentSoundVolAndBrightness.get(0)));
-                            int tempBrightness = (int) Double.parseDouble(currentSoundVolAndBrightness.get(1));
+                            tv_soundVolume.setText(currentSoundVolAndDisplayInfo.get(0));
+                            sb_soundVolume.setProgress(Integer.parseInt(currentSoundVolAndDisplayInfo.get(0)));
+                            int tempBrightness = (int) Double.parseDouble(currentSoundVolAndDisplayInfo.get(1));
                             tv_brightness.setText(String.valueOf(tempBrightness));
                             sb_brightness.setProgress(tempBrightness);
+
+                            tv_graphicCardModel.setText(currentSoundVolAndDisplayInfo.get(2));
+                            tv_graphicCardBus.setText(currentSoundVolAndDisplayInfo.get(3));
+                            tv_monitorResolution.setText(currentSoundVolAndDisplayInfo.get(4));
+                            tv_monitorModel.setText(currentSoundVolAndDisplayInfo.get(5));
+                            tv_monitorConnection.setText(currentSoundVolAndDisplayInfo.get(6));
                         }
                     });
                 }

@@ -190,7 +190,7 @@ public class CPUFragment extends Fragment {
                     });
                 }
             }
-        }).start();;
+        }).start();
 
     }
 

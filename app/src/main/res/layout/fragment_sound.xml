@@ -73,6 +73,143 @@
         android:textColor="@color/white"
         android:textSize="20sp" />
 
+    <TextView
+        android:id="@+id/tv_displayInfoTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Display Info"
+        android:layout_below="@+id/tv_brightness"
+        android:textSize="20sp"
+        android:textColor="@color/violet"
+        android:paddingTop="20dp"/>
+
+    <TableLayout
+        android:id="@+id/tl_displayInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/tv_displayInfoTitle">
+
+        <TableRow android:layout_width="250dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Graphic Card Model"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_graphicCardModel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Graphic Card"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow android:layout_width="250dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Monitor Resolution"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_graphicCardBus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Graphic Card"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold" />
+        </TableRow>
+        <TableRow android:layout_width="250dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Monitor Resolution"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_monitorResolution"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="resolution"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold" />
+        </TableRow>
+        <TableRow android:layout_width="250dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Monitor Model"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_monitorModel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="model"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow android:layout_width="250dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Monitor Connection"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_monitorConnection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="connection"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold" />
+        </TableRow>
+    </TableLayout>
+
     <com.ebanx.swipebtn.SwipeButton
         android:id="@+id/btn_shutdown"
         android:layout_width="match_parent"

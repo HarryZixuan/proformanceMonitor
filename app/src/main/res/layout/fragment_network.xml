@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/darkBlue">
+
+    <TextView
+        android:id="@+id/tv_networkTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Network"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        android:paddingTop="20dp"
+        android:paddingLeft="10dp"
+        android:visibility="visible"/>
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/gv_networkUsage"
+        android:layout_below="@+id/tv_networkTitle"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="20dp"
+        android:minWidth="380dp"
+        android:minHeight="380dp"
+        android:layout_width="380dp"
+        android:layout_height="380dp" />
+    <TableLayout
+        android:id="@+id/tl_networkIP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/gv_networkUsage">
+
+        <TableRow android:layout_width="250dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="IP4"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_networkIp4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="IP4"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow android:layout_weight="250">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="IP6"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_networkIp6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="IP6"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold" />
+        </TableRow>
+
+
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/tl_networkInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/tl_networkIP">
+        <TableRow android:layout_weight="250">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Type"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_networkType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="type"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Speed"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_networkSpeed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="speed"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow android:layout_weight="250">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Virtual"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_networkVirtual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="virtual"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="Latency"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tv_networkLatency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:padding="10sp"
+                android:textSize="14sp"
+                android:layout_weight="2"
+                android:text="latency"
+                android:textColor="@color/lightGreen"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+
+    </TableLayout>
+
+</RelativeLayout>

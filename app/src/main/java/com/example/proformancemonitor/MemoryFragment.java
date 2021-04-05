@@ -173,7 +173,6 @@ public class MemoryFragment extends Fragment {
         else {
             DecimalFormat df = new DecimalFormat("#.##");
             double tempVal = val/(Math.pow(1024, 3));
-            System.out.println(tempVal);
             return df.format(tempVal) + " GB";
         }
 

@@ -63,6 +63,9 @@ public class ProformanceMonitoringActivity extends AppCompatActivity {
                     selectedFragment = new SoundFragment();
                     selectedFragment.setArguments(bundle);
                     break;
+                case R.id.nav_network:
+                    selectedFragment = new NetworkFragment();
+                    selectedFragment.setArguments(bundle);
             }
 
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

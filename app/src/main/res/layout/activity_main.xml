@@ -42,7 +42,7 @@
         android:id="@+id/tv_manual"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Scan QR Code to Enter IP Address"
+        android:text="Scan QR Code and Tap Go to start"
         android:textSize="20dp"
         android:layout_below="@id/tv_introduction"
         android:paddingTop="10dp"

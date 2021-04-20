@@ -110,7 +110,7 @@
                 android:padding="10sp"
                 android:textSize="14sp"
                 android:layout_weight="2"
-                android:text="Graphic Card"
+                android:text="graphic Card"
                 android:textColor="@color/lightGreen"
                 android:textStyle="bold" />
         </TableRow>
@@ -123,7 +123,7 @@
                 android:padding="10sp"
                 android:textSize="14sp"
                 android:layout_weight="2"
-                android:text="Monitor Resolution"
+                android:text="Graphic Card Bus"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
             <TextView
@@ -134,7 +134,7 @@
                 android:padding="10sp"
                 android:textSize="14sp"
                 android:layout_weight="2"
-                android:text="Graphic Card"
+                android:text="graphic Card Bus"
                 android:textColor="@color/lightGreen"
                 android:textStyle="bold" />
         </TableRow>

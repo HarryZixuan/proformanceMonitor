@@ -176,13 +176,13 @@ public class CPUFragment extends Fragment {
                         public void run() {
                             tv_cpuUsage.setText(cpuUsage);
 
-                            //some system, ex, MacOS cannot get cpu temperature
+                            //some system cannot get cpu temperature
                             //add try catch to handle the exception
                             double cpuTemper;
                             try {
                                 cpuTemper = Double.parseDouble(cpuUsageList.get(1));
                             } catch (Exception e) {
-                                cpuTemper = 1;
+                                cpuTemper = 0;
                             }
 
                             addGraphViewEntry(Double.parseDouble(cpuUsageList.get(0)), cpuTemper);
@@ -208,7 +208,5 @@ public class CPUFragment extends Fragment {
         timeCounter ++;
 
     }
-
-
 
 }

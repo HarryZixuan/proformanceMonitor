@@ -17,7 +17,7 @@ import com.ebanx.swipebtn.SwipeButton;
 
 import java.util.ArrayList;
 
-
+//sound/display fragment
 public class SoundFragment extends Fragment {
     Bundle bundle;
     String ipAddress;
@@ -121,6 +121,7 @@ public class SoundFragment extends Fragment {
     }
 
 
+    //handles static informations
     public void getCurrentSoundAndDisplayInfo(){
         new Thread(new Runnable() {
             @Override
@@ -151,6 +152,7 @@ public class SoundFragment extends Fragment {
         }).start();;
     }
 
+    //handles the set sound volume request
     public void setSoundVoulme (int soundVolume){
         new Thread(new Runnable() {
             @Override
@@ -178,6 +180,7 @@ public class SoundFragment extends Fragment {
         }).start();;
     }
 
+    //handles the set brightness volume request
     public void setBrightness (int brightness){
         new Thread(new Runnable() {
             @Override
@@ -205,6 +208,7 @@ public class SoundFragment extends Fragment {
         }).start();;
     }
 
+    //handles the shutdown server request
     public void shutdownServer (){
         new Thread(new Runnable() {
             @Override

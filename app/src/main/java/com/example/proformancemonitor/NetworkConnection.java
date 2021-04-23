@@ -35,11 +35,11 @@ public class NetworkConnection {
         this.context = context;
     }
 
-    public String connect(){
+    public String connect(){ //if expect 0 or 1 return string, will be called when set sound/brightness
         URL url = null;
 
         try {
-            url = new URL(ipAddress);
+            url = new URL(ipAddress); //use urlConnection, URL/IPaddress must be complete url, ie, http://ip:3000/Proformance.html
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             urlConnection.setRequestProperty("Accept", "application/json");
@@ -56,6 +56,7 @@ public class NetworkConnection {
 
 
             int code = urlConnection.getResponseCode();
+            //readbufferstream
             bufferedInputStream = new BufferedInputStream(urlConnection.getInputStream());
             bufferedReader = new BufferedReader(new InputStreamReader(bufferedInputStream));
             stringBuffer = new StringBuffer();
@@ -66,7 +67,7 @@ public class NetworkConnection {
                     stringBuffer.append(str);
                 }
             }
-        }catch (Exception e){
+        }catch (Exception e){ //catch no network connection, or incorrect ipaddress
             e.printStackTrace();
             netwoekConnectionFailed();
             return null;
@@ -78,7 +79,7 @@ public class NetworkConnection {
                 if (bufferedReader != null){
                     bufferedReader.close();
                 }
-            } catch (IOException e) {
+            } catch (IOException e) { //catch bufferreader cannot be closed
                 e.printStackTrace();
                 netwoekConnectionFailed();
                 return null;
@@ -97,7 +98,7 @@ public class NetworkConnection {
             jsonObject = new JSONObject(stringBuffer.toString());
             responseStr = jsonObject.getString("text");
 
-        } catch (JSONException e) {
+        } catch (JSONException e) { //catch no value returned from server
             netwoekConnectionFailed();
             e.printStackTrace();
             return null;
@@ -106,6 +107,7 @@ public class NetworkConnection {
     }
 
     //if expecting multiple return value
+    //same as connect(), but added convert return string to Arraylist funciton
     public ArrayList<String> connect(int expectedListSize){
         ArrayList<String> returnList = new ArrayList<String>();
         URL url = null;

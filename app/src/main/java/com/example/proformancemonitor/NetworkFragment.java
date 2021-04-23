@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
+//network fragment
 public class NetworkFragment extends Fragment {
     private Bundle bundle;
     private String ipAddress;
@@ -70,6 +70,7 @@ public class NetworkFragment extends Fragment {
         tv_networkLatency = getView().findViewById(R.id.tv_networkLatency);
         updateNetworkInfo();
 
+        //config graph
         gv_networkUsage = getView().findViewById(R.id.gv_networkUsage);
         gv_networkUsage.setPivotX(17);
         networkTxSeries = new LineGraphSeries<DataPoint>();
@@ -131,6 +132,7 @@ public class NetworkFragment extends Fragment {
         timer.cancel();
     }
 
+    //update static information
     public void updateNetworkInfo(){
         new Thread(new Runnable() {
             @Override
@@ -154,6 +156,7 @@ public class NetworkFragment extends Fragment {
         }).start();;
     }
 
+    //update dynamic information
     public void updateNetworkUsage() {
         new Thread(new Runnable() {
             @Override
@@ -183,6 +186,7 @@ public class NetworkFragment extends Fragment {
                                 networkRxbits = 1;
                             }
 
+                            //handle the case which the computer does not connect to the internet
                             int networkLatnecyMs;
                             try {
                                 networkLatnecyMs = Integer.parseInt(networkUsageList.get(2));

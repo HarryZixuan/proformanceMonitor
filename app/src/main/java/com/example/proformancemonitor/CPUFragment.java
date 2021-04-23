@@ -47,12 +47,11 @@ public class CPUFragment extends Fragment {
     private TextView tv_cpuNrofCores;
 
 
-
+//CPU Fragment
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //return super.onCreateView(inflater, container, savedInstanceState);
         bundle = this.getArguments();
         ipAddress = "";
 
@@ -77,9 +76,11 @@ public class CPUFragment extends Fragment {
         tv_cpuNrofCores = getView().findViewById(R.id.tv_cpuNrofCores);
         updateCPUInfo();
 
-        //handle cpu usage
-        tv_cpuUsage = getView().findViewById(R.id.tv_cpuUsage);
+
+        tv_cpuUsage = getView().findViewById(R.id.tv_cpuUsage); //for debugging, will not be displayed on GUI
         gv_cpuUsage = getView().findViewById(R.id.gv_cpuUsage);
+
+        //set graph view format
         gv_cpuUsage.setPivotX(17);
         cpuUsageSeries = new LineGraphSeries<DataPoint>();
         cpuUsageSeries.setColor(Color.rgb(235,204,195));
@@ -93,7 +94,6 @@ public class CPUFragment extends Fragment {
         gv_cpuUsage.addSeries(cpuUsageSeries);
         gv_cpuUsage.addSeries(cpuTempertureSeries);
 
-        //set graph view format
         gv_cpuUsage.getGridLabelRenderer().setHorizontalLabelsColor(Color.WHITE);
         gv_cpuUsage.getGridLabelRenderer().setHorizontalAxisTitleTextSize(5);
         gv_cpuUsage.getGridLabelRenderer().setVerticalLabelsColor(Color.WHITE);
@@ -134,7 +134,7 @@ public class CPUFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        timer.cancel();
+        timer.cancel();  //cancel the timer, ie, stop sending the request when the Fragment is no longer started
     }
 
     public void updateCPUInfo(){
@@ -196,7 +196,7 @@ public class CPUFragment extends Fragment {
 
     public void addGraphViewEntry(double cpuUsage, double cpuTemper){
         //set scrollToEnd to false if timecounter < 35,
-        //otherwise, the graph display negative x scale at beginning
+        //otherwise, the graph displays negative x scale at beginning
         if(timeCounter < 35) {
             cpuUsageSeries.appendData(new DataPoint(timeCounter, cpuUsage), false, 60);
             cpuTempertureSeries.appendData(new DataPoint(timeCounter, cpuTemper), false, 60);

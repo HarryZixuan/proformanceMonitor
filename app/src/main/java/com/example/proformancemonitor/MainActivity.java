@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 IntentIntegrator intentIntegrator = new IntentIntegrator(MainActivity.this);
-                intentIntegrator.setPrompt("for flash use volume up key");
+                intentIntegrator.setPrompt("scan the QR code displayed on your computer");
                 intentIntegrator.setBeepEnabled(true);
                 intentIntegrator.setOrientationLocked(true);
                 intentIntegrator.setCaptureActivity(QRCapture.class);
@@ -114,5 +114,4 @@ public class MainActivity extends AppCompatActivity {
         }).start();;
 
     }
-
 }

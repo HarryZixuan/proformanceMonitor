@@ -73,6 +73,7 @@ public class MemoryFragment extends Fragment {
         tv_memorySwapFree = getView().findViewById(R.id.tv_memorySwapFree);
 
         //handle memory usage
+        //set graph view format
         gv_memoryUsage = getView().findViewById(R.id.gv_memoryUsage);
         gv_memoryUsage.setPivotX(17);
         memoryUsageSeries = new LineGraphSeries<DataPoint>();
@@ -83,8 +84,6 @@ public class MemoryFragment extends Fragment {
 
         gv_memoryUsage.addSeries(memoryUsageSeries);
 
-
-        //set graph view format
         gv_memoryUsage.getGridLabelRenderer().setHorizontalLabelsColor(Color.WHITE);
         gv_memoryUsage.getGridLabelRenderer().setHorizontalAxisTitleTextSize(5);
         gv_memoryUsage.getGridLabelRenderer().setVerticalLabelsColor(Color.WHITE);
@@ -125,7 +124,7 @@ public class MemoryFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        timer.cancel();
+        timer.cancel(); //cancel the timer, ie, stop sending the request when the Fragment is no longer started
     }
 
     public void updateMemoryUsage(){

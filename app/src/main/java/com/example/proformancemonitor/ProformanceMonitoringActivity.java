@@ -14,6 +14,8 @@ import android.view.Window;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+//a placeholder for all fragmments
+//handeling the bottom navigation bar
 public class ProformanceMonitoringActivity extends AppCompatActivity {
     private Intent intent;
     private String ipAddress;
@@ -37,7 +39,7 @@ public class ProformanceMonitoringActivity extends AppCompatActivity {
         bundle =  new Bundle();
         bundle.putString("ipAddress", ipAddress);
 
-        //set up default fragment
+        //set up default fragment,CPU
         Fragment defaultFragment = new CPUFragment();
         defaultFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
